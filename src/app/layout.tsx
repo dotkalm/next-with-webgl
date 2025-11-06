@@ -27,7 +27,7 @@ export default function RootLayout({
         style={{
           margin: 0,
           padding: 0,
-          height: '101%',
+          minHeight: '100vh',
           backgroundColor: 'darkblue',
           overscrollBehaviorY: 'none',
           overscrollBehavior: 'none',

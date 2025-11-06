@@ -1,16 +1,13 @@
-import Box from '@mui/material/Box'; 
 import Webcam from '@/components/Webcam';
 
 export default function Home() {
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         color: 'white',
-
       }}
     >
       <Webcam />
-    </Box>
-
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-// src/hooks/useWebGLContext.ts
 import { useEffect, useState, RefObject } from 'react';
 
 interface UseWebGLContextOptions {

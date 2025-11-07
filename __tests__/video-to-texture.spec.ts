@@ -1,4 +1,3 @@
-// __tests__/video-to-texture.spec.ts
 import { createTestContext } from '../src/webgl/createContext';
 import { MockVideoFrameExtractor } from '../__mocks__/videoFrameExtractor';
 

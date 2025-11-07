@@ -1,4 +1,3 @@
-// src/hooks/useWebcam.spec.ts
 import { renderHook, waitFor } from '@testing-library/react';
 import { useWebcam } from './useWebcam';
 

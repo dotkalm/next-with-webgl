@@ -1,4 +1,3 @@
-// src/hooks/useWebcam.ts
 import { useEffect, useRef, useState } from 'react';
 
 interface UseWebcamOptions {

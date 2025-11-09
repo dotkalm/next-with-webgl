@@ -38,7 +38,7 @@ export const CannyEdgeDetector: React.FC<CannyEdgeDetectorProps> = ({
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programsRef = useRef<WebGLPrograms>({});
   const framebuffersRef = useRef<WebGLFramebuffers>({});
-  const texturesRef = useRef<WebGLTextures>({});
+  const texturesRef = useRef<WebGLTextures>({ input: null });
 
   useEffect(() => {
     const initWebcam = async () => {
@@ -71,7 +71,7 @@ export const CannyEdgeDetector: React.FC<CannyEdgeDetectorProps> = ({
     if (!canvasRef.current || !isStreaming) return;
 
     const canvas = canvasRef.current;
-    const gl = canvas.getContext('webgl');
+    const gl = canvas.getContext('webgl2');
     if (!gl) {
       console.error('WebGL not supported');
       return;

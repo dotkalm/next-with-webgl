@@ -13,7 +13,7 @@ export function useWebGLContext({ canvasRef, enabled }: UseWebGLContextOptions) 
     if (!canvasRef.current || !enabled) return;
 
     const canvas = canvasRef.current;
-    const context = canvas.getContext('webgl');
+    const context = canvas.getContext('webgl2');
 
     if (!context) {
       setError('WebGL not supported');

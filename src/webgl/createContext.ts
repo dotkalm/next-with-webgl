@@ -4,7 +4,7 @@ export function createTestContext(width = 64, height = 64) {
   if (typeof document !== 'undefined') {
     // In jsdom or browser
     const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl');
+    const gl = canvas.getContext('webgl2');
     if (gl) return gl as WebGLRenderingContext;
 
     // Fall back to mock if jsdom doesn't support WebGL

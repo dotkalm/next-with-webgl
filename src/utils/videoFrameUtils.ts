@@ -1,14 +1,10 @@
-export interface VideoFrameData {
-    data: Uint8Array;
-    width: number;
-    height: number;
-    timestamp: number;
-}
+import type {
+    TCreateVideoTexture,
+    TVideoFrameData,
+    TUpdateVideoTexture,
+ } from "@/types";
 
-export function createVideoTexture(
-    gl: WebGLRenderingContext,
-    frame: VideoFrameData
-): WebGLTexture | null {
+export const createVideoTexture: TCreateVideoTexture = ( gl, frame ) => {
     const texture = gl.createTexture();
     if (!texture) return null;
 
@@ -36,11 +32,7 @@ export function createVideoTexture(
     return texture;
 }
 
-export function updateVideoTexture(
-    gl: WebGLRenderingContext,
-    texture: WebGLTexture,
-    frame: VideoFrameData
-): void {
+export const updateVideoTexture: TUpdateVideoTexture = ( gl, texture, frame ) => {
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texSubImage2D(
         gl.TEXTURE_2D,

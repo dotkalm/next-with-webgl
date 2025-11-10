@@ -1,18 +1,15 @@
-import type {
-    WebGLBuffers,
-    UniformValue,
-} from '@/types';
+import type { TRenderPass } from '@/types';
 
-export function renderPass(
-  gl: WebGLRenderingContext,
-  program: WebGLProgram | null | undefined,
-  framebuffer: WebGLFramebuffer | null | undefined,
-  inputTexture: WebGLTexture | null | undefined,
-  buffers: WebGLBuffers,
-  width: number,
-  height: number,
-  uniforms: Record<string, UniformValue>
-) {
+export const renderPass: TRenderPass = (
+  gl,
+  program,
+  framebuffer,
+  inputTexture,
+  buffers,
+  width,
+  height,
+  uniforms
+) => {
   if (!program || !inputTexture || !buffers.position || !buffers.texCoord) return;
 
   gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer || null);

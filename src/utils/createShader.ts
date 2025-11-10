@@ -1,4 +1,6 @@
-export function createShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
+import type { TCreateShader } from "@/types";
+
+export const createShader: TCreateShader = (gl, type, source) => {
   const shader = gl.createShader(type);
   if (!shader) return null;
   

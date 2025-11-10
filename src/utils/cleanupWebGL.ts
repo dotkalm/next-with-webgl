@@ -1,16 +1,11 @@
-import type {
-    WebGLPrograms,
-    WebGLFramebuffers,
-    WebGLTextures,
-} from '@/types';
+import type { TCleanupWebGL } from '@/types';
 
-export function cleanupWebGL(
-  gl: WebGLRenderingContext,
-  programs: WebGLPrograms,
-  framebuffers: WebGLFramebuffers,
-  textures: WebGLTextures
-) {
-  // Clean up programs
+export const cleanupWebGL: TCleanupWebGL = (
+  gl,
+  programs,
+  framebuffers,
+  textures,
+) => {
   Object.values(programs).forEach(program => {
     if (program) gl.deleteProgram(program);
   });

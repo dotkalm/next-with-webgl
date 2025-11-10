@@ -1,21 +1,16 @@
 import { renderPass } from '@/utils';
-import type { 
-    WebGLPrograms,
-    WebGLFramebuffers,
-    WebGLTextures,
-    WebGLBuffers,
-} from '@/types';
+import type { TProcessFrame } from '@/types';
 
-export function processFrame(
-  gl: WebGLRenderingContext,
-  video: HTMLVideoElement,
-  programs: WebGLPrograms,
-  framebuffers: WebGLFramebuffers,
-  textures: WebGLTextures,
-  buffers: WebGLBuffers,
-  lowThreshold: number,
-  highThreshold: number
-) {
+export const processFrame: TProcessFrame = (
+  gl,
+  video,
+  programs,
+  framebuffers,
+  textures,
+  buffers,
+  lowThreshold,
+  highThreshold
+) => {
   const width = video.videoWidth;
   const height = video.videoHeight;
   console.log(textures, lowThreshold, highThreshold);

@@ -1,9 +1,4 @@
-export interface VideoFrame {
-    data: Uint8Array;
-    width: number;
-    height: number;
-    timestamp: number;
-}
+import type { TVideoFrame } from "@/types";
 
 export class VideoFrameExtractor {
     private video: HTMLVideoElement | null = null;
@@ -30,7 +25,7 @@ export class VideoFrameExtractor {
         });
     }
 
-    extractFrame(timestamp?: number): VideoFrame {
+    extractFrame(timestamp?: number): TVideoFrame {
         if (!this.video || !this.canvas || !this.ctx) {
             throw new Error('Video not loaded');
         }

@@ -1,3 +1,4 @@
+import { type RefObject } from 'react';
 import vertexShaderSource from '@/shaders/source.vert';
 import gaussianBlurFragmentShader from '@/shaders/gaussian.frag';
 import gradientFragmentShader from '@/shaders/gradient.frag';
@@ -10,21 +11,15 @@ import {
     createTexture,
     createFramebuffer,
 } from '@/utils';
+import type { TInitWebGL } from '@/types';
 
-import type {
-    WebGLPrograms,
-    WebGLBuffers,
-    WebGLFramebuffers,
-    WebGLTextures,
-} from '@/types';
-
-export function initWebGL(
-  gl: WebGLRenderingContext,
-  programsRef: React.MutableRefObject<WebGLPrograms>,
-  framebuffersRef: React.MutableRefObject<WebGLFramebuffers>,
-  texturesRef: React.MutableRefObject<WebGLTextures>,
-  buffersRef: React.MutableRefObject<WebGLBuffers>
-) {
+export const initWebGL: TInitWebGL = (
+  gl,
+  programsRef,
+  framebuffersRef,
+  texturesRef,
+  buffersRef,
+) => {
   // Create vertex shader (shared)
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   if (!vertexShader) return;

@@ -1,4 +1,6 @@
-export function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader): WebGLProgram | null {
+import type { TCreateProgram } from "@/types";
+
+export const createProgram: TCreateProgram = (gl, vertexShader, fragmentShader) => {
   const program = gl.createProgram();
   if (!program) return null;
   

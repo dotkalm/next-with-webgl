@@ -1,21 +1,26 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  type FC,
+} from 'react';
 
 import {
-    cleanupWebGL,
-    initWebGL,
-    processFrame,
+  cleanupWebGL,
+  initWebGL,
+  processFrame,
 } from '@/utils';
 
-import type { 
-  CannyEdgeDetectorProps,
-  WebGLBuffers,
-  WebGLFramebuffers,
-  WebGLPrograms,
-  WebGLTextures,
+import type {
+  TCannyEdgeDetectorProps,
+  TWebGLBuffers,
+  TWebGLFramebuffers,
+  TWebGLPrograms,
+  TWebGLTextures,
 } from '@/types/webgl';
 
-export const EdgeDetector: React.FC<CannyEdgeDetectorProps> = ({
+export const EdgeDetector: FC<TCannyEdgeDetectorProps> = ({
   lowThreshold = 0.05,
   highThreshold = 0.15,
 }) => {
@@ -23,10 +28,10 @@ export const EdgeDetector: React.FC<CannyEdgeDetectorProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isStreaming, setIsStreaming] = useState(false);
   const glRef = useRef<WebGLRenderingContext | null>(null);
-  const programsRef = useRef<WebGLPrograms>({});
-  const framebuffersRef = useRef<WebGLFramebuffers>({});
-  const texturesRef = useRef<WebGLTextures>({ input: null });
-  const buffersRef = useRef<WebGLBuffers>({ position: null, texCoord: null });
+  const programsRef = useRef<TWebGLPrograms>({});
+  const framebuffersRef = useRef<TWebGLFramebuffers>({});
+  const texturesRef = useRef<TWebGLTextures>({ input: null });
+  const buffersRef = useRef<TWebGLBuffers>({ position: null, texCoord: null });
 
   useEffect(() => {
     const initWebcam = async () => {

@@ -84,3 +84,11 @@ export type TUseWebGLCanvas = (
 ) => void;
 
 export type TUseGetWebcam = (options: TUseWebcamOptions) => TUseWebcamReturn;
+
+export type TInitWebGL = (
+  gl: WebGLRenderingContext,
+  programsRef: React.RefObject<TWebGLPrograms>,
+  framebuffersRef: React.RefObject<TWebGLFramebuffers>,
+  texturesRef: React.RefObject<TWebGLTextures>,
+  buffersRef: React.RefObject<TWebGLBuffers>,
+) => void;

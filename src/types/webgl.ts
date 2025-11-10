@@ -74,3 +74,10 @@ export interface TUseWebcamReturn {
   isStreaming: boolean;
   error: string | null;
 }
+
+export interface TEdgeFrame {
+  data: Uint8Array;
+  width: number;
+  height: number;
+  description: string;
+}

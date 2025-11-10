@@ -15,18 +15,6 @@ import type {
   TUseWebGLCanvas,
 } from '@/types';
 
-interface UseEdgeDetectionOptions {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
-  videoRef: React.RefObject<HTMLVideoElement>;
-  isStreaming: boolean;
-  lowThreshold: number;
-  highThreshold: number;
-}
-
-interface UseEdgeDetectionReturn {
-  gl: WebGLRenderingContext | null;
-}
-
 export const useWebGLCanvas: TUseWebGLCanvas = ({
   canvasRef,
   highThreshold,

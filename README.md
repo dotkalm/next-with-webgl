@@ -1,3 +1,4 @@
+ngrok http 3000 --url https://booted.ngrok.io
 Booted - a prank software that overlays a parking enforcement boot on images of parked cars. 
 
 WIP 

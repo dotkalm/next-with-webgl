@@ -7,7 +7,9 @@ import Typography from '@mui/material/Typography';
 import { useMediaQuery } from '@mui/material';
 
 import { useWebcam } from '@/hooks/useWebcam';
-import { type WebcamCaptureProps, Orientation } from '@/types';
+import { useFrameCapture } from '@/hooks/useFrameCapture';
+import { type WebcamCaptureProps } from '@/types';
+import { Orientation } from '@/types/enum';
 import { styles } from '@/styles';
 
 export default function WebcamCapture({
@@ -25,6 +27,12 @@ export default function WebcamCapture({
     facingMode: 'environment',
     height,
     width,
+  });
+
+  const { captureFrame, isUploading, error: captureError } = useFrameCapture({
+    videoRef,
+    width,
+    height,
   });
 
   const applyZoomToCamera = async (newZoom: number) => {
@@ -105,16 +113,46 @@ export default function WebcamCapture({
                 Camera Zoom: {zoomLevel.toFixed(1)}x
               </Typography>
             )}
+            {captureError && (
+              <Typography sx={{ 
+                color: 'red', 
+                textAlign: 'center', 
+                mt: 1, 
+                fontSize: '0.8rem' 
+              }}>
+                {captureError}
+              </Typography>
+            )}
           </Box>
           <Box sx={{
             ...styles.shutterContainer,
           }}>
-            <Box sx={styles.shutter} />
+            {/* Shutter button with click event to send current frame to api */}
+            <Box 
+              sx={{
+                ...styles.shutter,
+                cursor: 'pointer',
+                opacity: isUploading ? 0.5 : 1,
+                transition: 'opacity 0.2s ease',
+              }} 
+              onClick={captureFrame}
+            />
+            {/* Upload status indicator */}
           </Box>
           <Box sx={styles.shutterContainer}>
             {orientation === Orientation.LANDSCAPE && (
               <Typography sx={styles.zoomInfo}>
                 Camera Zoom: {zoomLevel.toFixed(1)}x
+              </Typography>
+            )}
+            {isUploading && (
+              <Typography sx={{ 
+                color: 'white', 
+                textAlign: 'center', 
+                mt: 1, 
+                fontSize: '0.8rem' 
+              }}>
+                Uploading...
               </Typography>
             )}
           </Box>

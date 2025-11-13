@@ -9,3 +9,17 @@ export interface UseWebcamOptions {
   facingMode?: 'user' | 'environment';
   advanced?: MediaTrackSettings[];
 };
+
+export interface UseFrameCaptureOptions {
+  videoRef: React.RefObject<HTMLVideoElement | null>;
+  canvasRef?: React.RefObject<HTMLCanvasElement>;
+  width?: number;
+  height?: number;
+}
+
+export interface UseFrameCaptureReturn {
+  captureFrame: () => Promise<void>;
+  isUploading: boolean;
+  error: string | null;
+  lastCaptureTime: Date | null;
+}

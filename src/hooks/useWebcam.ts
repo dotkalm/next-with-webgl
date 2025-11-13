@@ -1,15 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-
-interface UseWebcamOptions {
-  width?: number;
-  height?: number;
-  facingMode?: 'user' | 'environment';
-}
+import { type UseWebcamOptions } from '@/types';
 
 export function useWebcam({ 
   width = 640, 
   height = 480,
-  facingMode = 'user'
+  facingMode = 'user',
+  advanced = []
 }: UseWebcamOptions = {}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -23,7 +19,8 @@ export function useWebcam({
           video: {
             width: { ideal: width },
             height: { ideal: height },
-            facingMode
+            facingMode,
+            advanced,
           }
         });
 

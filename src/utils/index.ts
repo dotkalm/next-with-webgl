@@ -6,5 +6,4 @@ export * from './createTexture';
 export * from './initWebGL';
 export * from './processFrame';
 export * from './renderPass';
-export * from './canvasToSVG';
 export * from './svg';

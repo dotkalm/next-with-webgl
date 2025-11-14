@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await response.json();
+    console.log('Proxy upload successful:', result);
     
     return NextResponse.json(result);
   } catch (error) {

@@ -110,7 +110,7 @@ export const styles = {
         },
         width: {
             xs: '100vw',
-            sm: '10em'
+            sm: '15em'
         },
         display: 'flex',
         alignItems: 'center',

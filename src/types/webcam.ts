@@ -1,4 +1,4 @@
-import { type FrameUploadResponse } from "@/types";
+import { type CarDetectionResponse } from "@/types";
 
 export interface WebcamCaptureProps {
   width?: number;
@@ -20,7 +20,7 @@ export interface UseFrameCaptureOptions {
 }
 
 export interface UseFrameCaptureReturn {
-  captureFrame: () => Promise<FrameUploadResponse | undefined>;
+  captureFrame: () => Promise<CarDetectionResponse | undefined>;
   isUploading: boolean;
   error: string | null;
   lastCaptureTime: Date | null;

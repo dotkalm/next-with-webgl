@@ -8,19 +8,27 @@ import { useMediaQuery } from '@mui/material';
 
 import { useWebcam } from '@/hooks/useWebcam';
 import { useFrameCapture } from '@/hooks/useFrameCapture';
-import { Orientation, type Detection, type WebcamCaptureProps } from '@/types';
+import { 
+  Orientation, 
+  type CarDetection, 
+  type WebcamCaptureProps, 
+  type BoundingBox,
+} from '@/types';
 import { styles } from '@/styles';
-import { makeConfidenceChecker } from '@/utils';
+import { getBoundingBoxes } from '@/utils';
 
 export default function WebcamCapture({
   width = 640,
   height = 480,
 }: WebcamCaptureProps) {
   const isLandscape = useMediaQuery('(orientation: landscape)');
+  const [totalCars, setTotalCars] = useState<number>(0);
   const [orientation, setOrientation] = useState<Orientation>(Orientation.PORTRAIT);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [maxZoom, setMaxZoom] = useState(3);
-  const [ detections, setDetections ] = useState<Detection[]>([]);
+  const [detections, setDetections] = useState<CarDetection[]>([]);
+  const [boundingBoxes, setBoundingBoxes] = useState<BoundingBox[]>([]);
+
   const isApplyingZoomRef = useRef(false);
 
   const { videoRef } = useWebcam({
@@ -30,7 +38,10 @@ export default function WebcamCapture({
     width,
   });
 
-  const { captureFrame, isUploading, error: captureError } = useFrameCapture({
+  const { 
+    captureFrame, isUploading,
+    error: captureError,
+  } = useFrameCapture({
     videoRef,
     width,
     height,
@@ -48,8 +59,6 @@ export default function WebcamCapture({
 
     try {
       const capabilities = videoTrack.getCapabilities();
-      console.log('Camera Capabilities:', capabilities);
-
       if (capabilities.zoom) {
         setMaxZoom(capabilities.zoom.max || 3);
 
@@ -74,25 +83,27 @@ export default function WebcamCapture({
 
   const handleSliderChange = (event: Event, value: unknown) => {
     const newZoom = value as number;
-    console.log('Slider changed:', { value: newZoom });
     // Update UI state immediately for responsive slider
     setZoomLevel(newZoom);
   };
 
   const handleSliderChangeCommitted = (event: Event | React.SyntheticEvent, value: unknown) => {
     const newZoom = value as number;
-    console.log('Slider committed:', { value: newZoom });
-    // Apply actual camera zoom when user finishes dragging
     applyZoomToCamera(newZoom);
   };
 
   const handleClick = async () => {
     const response = await captureFrame();
-    const { detections } = response || {};
+    const { detections, total_cars } = response || {};
+    if( total_cars !== undefined ) {
+      setTotalCars(total_cars);
+    }
     if (detections) {
       setDetections(detections);
+      setBoundingBoxes(getBoundingBoxes(detections));
     }
   }
+
   return (
     <Box sx={styles.webcamContainer}>
       <Paper elevation={3} sx={styles.webcam}>
@@ -131,10 +142,16 @@ export default function WebcamCapture({
                 {captureError}
               </Typography>
             )}
-            {detections.map(({confidence}: Detection, index: number) => (
-              <Box key={index}>
-                {makeConfidenceChecker(confidence)} 
-              </Box>
+            {totalCars > 0 && `Total Cars Detected: ${totalCars}`}
+            {detections.map(({ wheel_count }: CarDetection, index: number) => (
+              <>
+                {wheel_count > 0 && (
+                  <Box key={index}>
+                    {`car ${index + 1}: ${wheel_count} wheel(s) detected`}
+                  </Box>
+                )
+                }
+              </>
             ))}
           </Box>
           <Box sx={{

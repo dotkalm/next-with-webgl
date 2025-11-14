@@ -1,10 +1,13 @@
 'use client'
 import {
   useRef,
+  useState,
+  useEffect,
   type FC,
 } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
 import { useGetWebcam } from '@/hooks/useGetWebcam';
 import { useWebGLCanvas } from '@/hooks/useWebGLCanvas';
 import type { TCannyEdgeDetectorProps } from '@/types/webgl';
@@ -15,6 +18,7 @@ export const EdgeDetector: FC<TCannyEdgeDetectorProps> = ({
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isPortrait = useMediaQuery('(orientation: portrait)');
 
   const { isStreaming } = useGetWebcam({
     facingMode: 'environment',
@@ -36,30 +40,35 @@ export const EdgeDetector: FC<TCannyEdgeDetectorProps> = ({
       <Box sx={{
         display: 'flex',
         gap: '1rem',
-        canvas: {
-          border: '1px solid #ccc',
-          transform: 'rotate(180deg)',
-        },
         video: {
           border: '1px solid #ccc',
-          display: 'none', 
+          display: 'block', 
         },
       }}>
         <Box>
           <video
             ref={videoRef}
-            width={640}
-            height={480}
+            width={isPortrait ? 480 : 640}
+            height={isPortrait ? 640 : 480}
             playsInline
             muted
             autoPlay
           />
         </Box>
-        <Box>
+        <Box sx={{ 
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+        }}>
           <canvas
             ref={canvasRef}
-            width={640}
-            height={480}
+            width={isPortrait ? 480 : 640}
+            height={isPortrait ? 640 : 480}
+            style={{
+              border: '1px solid #ccc',
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
         </Box>
       </Box>

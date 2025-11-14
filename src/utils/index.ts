@@ -6,3 +6,5 @@ export * from './createTexture';
 export * from './initWebGL';
 export * from './processFrame';
 export * from './renderPass';
+export * from './edgeDataToSVG';
+export * from './canvasToSVG';

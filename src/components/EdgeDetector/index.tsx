@@ -22,9 +22,9 @@ export const EdgeDetector: FC<TCannyEdgeDetectorProps> = ({
 
   const { isStreaming } = useGetWebcam({
     facingMode: 'environment',
-    height: 480,
+    width: isPortrait ? 480 : 640,
+    height: isPortrait ? 640 : 480,
     videoRef,
-    width: 640,
   });
 
   useWebGLCanvas({

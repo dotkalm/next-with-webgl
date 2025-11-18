@@ -49,6 +49,7 @@ export function extractEdgePaths(
       if (!isEdge(x, y) || isVisited(x, y)) break;
 
       const pixelIntensity = getPixel(x, y);
+
       points.push({ x, y, intensity: pixelIntensity });
       intensities.push(pixelIntensity);
       totalIntensity += pixelIntensity;

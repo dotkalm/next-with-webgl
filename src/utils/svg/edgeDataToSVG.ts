@@ -10,6 +10,7 @@ import { generateSVG } from './generateSVG';
  * @param height - Image height
  * @param options - SVG generation options
  */
+
 export function edgeDataToSVG(
   data: Uint8Array,
   width: number,

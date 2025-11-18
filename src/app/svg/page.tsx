@@ -24,7 +24,7 @@ export default function SVGEdgeDetector() {
   const [svgContent, setSvgContent] = useState<string>('');
 
   const { isStreaming } = useGetWebcam({
-    facingMode: 'environment',
+    facingMode: 'user',
     height: isPortrait ? 640 : 480,
     videoRef,
     width: isPortrait ? 480 : 640,
@@ -90,12 +90,6 @@ export default function SVGEdgeDetector() {
       }
     };
   }, [isStreaming]);
-
-  const handleDownloadSVG = () => {
-    if (svgContent) {
-      downloadSVG(svgContent, `edge-detection-${Date.now()}.svg`);
-    }
-  };
 
   return (
     <Box

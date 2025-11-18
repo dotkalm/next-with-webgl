@@ -41,7 +41,7 @@ export default function LinesCirclesDetector() {
   const lastFrameTime = useRef<number>(0);
 
   const { isStreaming } = useGetWebcam({
-    facingMode: 'environment',
+    facingMode: 'user',
     height: isPortrait ? 640 : 480,
     videoRef,
     width: isPortrait ? 480 : 640,

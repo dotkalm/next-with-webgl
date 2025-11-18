@@ -1,9 +1,6 @@
 import type { EdgePath } from '@/types/svg';
 import { calculateDashOffset } from './calculateDashOffset';
 
-/**
- * Generate SVG string from edge paths
- */
 export function generateSVG(
   paths: EdgePath[],
   width: number,
@@ -12,24 +9,21 @@ export function generateSVG(
   strokeColor: string,
   time?: number
 ): string {
-  // Calculate oscillating dash offset based on time
+
   const dashOffset = time !== undefined 
     ? calculateDashOffset(time)
     : 0;
 
   const pathElements = paths
     .map(path => {
-      if (path.points.length < 2) return '';
+      if (path.points.length < 2) return null;
 
-      // Flip Y coordinates since WebGL origin is bottom-left
       const d = path.points
         .map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${(height - p.y).toFixed(2)}`)
         .join(' ');
 
       const opacity = Math.max(0.3, path.intensity); // Minimum 30% opacity
       
-      // Create dash array from actual pixel intensity values
-      // Sample every few points to avoid too many values
       const intensities = path.intensities || [];
       const sampleRate = Math.max(1, Math.floor(intensities.length / 20));
       const dashArray = intensities.length > 0
@@ -40,7 +34,7 @@ export function generateSVG(
               return Math.max(1, Math.floor(intensity / 255 * 30));
             })
             .join(' ')
-        : '5 5'; // Fallback dash pattern
+        : '5 5';
       
       return `    <path d="${d}" stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="none" opacity="${opacity.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset.toFixed(2)}"/>`;
     })

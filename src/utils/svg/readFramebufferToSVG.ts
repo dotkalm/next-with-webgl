@@ -12,6 +12,8 @@ export function readFramebufferToSVG(
 ): string {
   const pixels = new Uint8Array(width * height * 4);
   gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+
   
+  console.log('Framebuffer pixels read:', pixels);
   return edgeDataToSVG(pixels, width, height, options);
 }

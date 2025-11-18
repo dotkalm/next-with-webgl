@@ -56,7 +56,6 @@ export default function SVGEdgeDetector() {
     videoRef,
   });
 
-  // Update SVG every frame
   useEffect(() => {
     if (!isStreaming || !glRef.current || !canvasRef.current) {
       return;
@@ -138,8 +137,16 @@ export default function SVGEdgeDetector() {
             mx: 'auto',
             maxWidth: '100%',
           }}
-          dangerouslySetInnerHTML={{ __html: svgContent }}
-        />
+        >
+          <svg 
+            height={canvasDimensions.height}
+            viewBox={`0 0 ${canvasDimensions.width} ${canvasDimensions.height}`}
+            width={canvasDimensions.width}
+            xmlns="http://www.w3.org/2000/svg" 
+          >
+            {svgContent}
+          </svg>
+        </Box>
       </Paper>
     </Box>
   );

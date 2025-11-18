@@ -3,12 +3,11 @@ import { calculateDashOffset } from './calculateDashOffset';
 
 export function generateSVG(
   paths: EdgePath[],
-  width: number,
   height: number,
   strokeWidth: number,
   strokeColor: string,
   time?: number
-): string {
+) {
 
   const dashOffset = time !== undefined 
     ? calculateDashOffset(time)
@@ -36,15 +35,19 @@ export function generateSVG(
             .join(' ')
         : '5 5';
       
-      return `    <path d="${d}" stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="none" opacity="${opacity.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset.toFixed(2)}"/>`;
+      return (
+        <path
+          d={d}
+          opacity={opacity.toFixed(2)}
+          stroke={strokeColor}
+          strokeDasharray={dashArray}
+          strokeDashoffset={dashOffset.toFixed(2)}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={strokeWidth}
+        />
+      );
     })
-    .filter(p => p.length > 0)
-    .join('\n');
 
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">
-  <g id="edges">
-${pathElements}
-  </g>
-</svg>`;
+  return(<g id="edges">{pathElements}</g>);
 }
